@@ -1,17 +1,16 @@
 import AWS from "aws-sdk";
+import { db } from "./database/mongodb";
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+export async function main(event, context) {
+  // By default, the callback waits until the runtime event loop is empty
+  // before freezing the process and returning the results to the caller.
+  // Setting this property to false requests that AWS Lambda freeze the
+  // process soon after the callback is invoked, even if there are events
+  // in the event loop.
+  context.callbackWaitsForEmptyEventLoop = false;
 
-export async function main() {
-  const getParams = {
-    // Get the table name from the environment variable
-    TableName: process.env.tableName,
-    // Get the row where the counter is called "clicks"
-    Key: {
-      counter: "clicks",
-    },
-  };
-  const results = await dynamoDb.get(getParams).promise();
+  //Get counter information from the database
+  const counter = await db.collection("counter").find({ id: "counter" });
 
   // If there is a row, then get the value of the
   // column called "tally"

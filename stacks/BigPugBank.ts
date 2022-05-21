@@ -5,21 +5,13 @@ import {
   Table,
 } from "@serverless-stack/resources";
 
-export function MyStack({ stack }: StackContext) {
-  const table = new Table(stack, "Counter", {
-    fields: {
-      counter: "string",
-    },
-    primaryIndex: { partitionKey: "counter" },
-  });
-
+export function BigPugBank({ stack }: StackContext) {
   // Create a HTTP API
   const api = new Api(stack, "Api", {
     defaults: {
       function: {
-        // Pass in the table name to our API
         environment: {
-          tableName: table.tableName,
+          MONGODB_URI: process.env.MONGODB_URI,
         },
       },
     },
@@ -27,9 +19,6 @@ export function MyStack({ stack }: StackContext) {
       "POST /": "lambda.main",
     },
   });
-
-  // Allow the API to access the table
-  api.attachPermissions([table]);
 
   const site = new StaticSite(stack, "VueJSSite", {
     path: "frontend",
