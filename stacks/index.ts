@@ -1,5 +1,5 @@
 import { App } from "@serverless-stack/resources";
-import { BigPugBank } fro./BigPugBankugBank";
+import { BigPugBank } from "./BigPugBank";
 
 export default function main(app: App) {
   app.setDefaultFunctionProps({

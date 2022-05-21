@@ -6,7 +6,7 @@ const MongoClient = mongodb.MongoClient;
 // and reuse it so that we don't have to connect to the database on every request.
 let cachedDb = null;
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
   if (cachedDb) {
     return cachedDb;
   }
@@ -15,9 +15,7 @@ async function connectToDatabase() {
   const client = await MongoClient.connect(process.env.MONGODB_URI);
 
   // Specify which database we want to use
-  cachedDb = await client.db("demo");
+  cachedDb = client.db(process.env.MONGODB_DB_NAME);
 
   return cachedDb;
 }
-
-export const db = await connectToDatabase();

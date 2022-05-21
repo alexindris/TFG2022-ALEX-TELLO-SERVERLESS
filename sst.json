@@ -1,5 +1,5 @@
 {
-  "name": "vue-app",
-  "region": "us-east-1",
+  "name": "big-pug-bank",
+  "region": "eu-west-3",
   "main": "stacks/index.ts"
 }
