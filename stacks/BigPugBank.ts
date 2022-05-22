@@ -13,8 +13,8 @@ export function BigPugBank({ stack }: StackContext) {
     },
     routes: {
       "GET /applications": "./api/applications.getAll",
-      "POST /": "./api/applications.create",
-      // "GET /:id": "./api/applications.getOne",
+      "POST /applications": "./api/applications.create",
+      "GET /application/{id}": "./api/applications.getOne",
     },
   });
 

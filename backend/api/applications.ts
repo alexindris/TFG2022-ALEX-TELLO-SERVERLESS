@@ -28,11 +28,10 @@ export async function getAll(event, context) {
 
   // Get all applications from the database
   const applications = await db.collection("applications").find({}).toArray();
-  console.log(applications);
 
   return {
     statusCode: 200,
-    body: JSON.stringify(applications),
+    body: applications,
   };
 }
 
@@ -47,6 +46,27 @@ export async function create(event, context) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(application),
+    body: application,
+  };
+}
+
+export async function getOne(event, context) {
+  context.callbackWaitsForEmptyEventLoop = false;
+  const db = await connectToDatabase();
+
+  const id = event.pathParameters.id;
+
+  const application = await db.collection("applications").findOne({ id: id });
+
+  if (!application) {
+    return {
+      statusCode: 404,
+      body: "Application not found",
+    };
+  }
+
+  return {
+    statusCode: 200,
+    body: application,
   };
 }
