@@ -14,18 +14,29 @@ model applications {
 }
 
 model Applicant {
-  id      String    @id @map("_id")
+  id                String        @id @map("_id")
   applicationNumber String
-  applicantNumber String
-  firstName String
-  lastName String
-  employer String
-  employedSince DateTime
-  birthday DateTime
-  address Address[]
-  business Business
-  employment Employment
-  maritalStatus MaritalStatus
+  applicantNumber   String
+  firstName         String
+  lastName          String
+  employer          String
+  employedSince     DateTime
+  birthday          DateTime
+  address           Address[]
+  business          Business
+  employment        Employment
+  maritalStatus     MaritalStatus
+}
+
+model Financing {
+  id                String         @id @map("_id")
+  applicationNumber String
+  financingNeeds    Float
+  ownResources      OwnResources?
+  purchaceCosts     PurchaceCosts?
+  loans             Loan[]
+  ownResourcesId    String         @unique
+  purchaceCostsId   String         @unique
 }
 
 model Address {
@@ -48,7 +59,7 @@ enum Business {
   INDUSTRY
   PUBLIC_SERVICE
   OTHER
-} 
+}
 
 enum Employment {
   EMPLOYEE
@@ -66,4 +77,32 @@ enum MaritalStatus {
   SINGLE
   DIVORCED
   WIDOWED
+}
+
+model Loan {
+  id                       String     @id @map("_id")
+  loanAmount               Float
+  interestRate             Float
+  repaymentInPercent       Float
+  fixedInterestRateInYears Float
+  Financing                Financing? @relation(fields: [financingId], references: [id])
+  financingId              String?
+}
+
+model OwnResources {
+  id                         String     @id @map("_id")
+  liquidAssets               Float
+  balanceFromBuildingSociety Float
+  ownManpower                Float
+  Financing                  Financing? @relation(fields: [financingId], references: [id])
+  financingId                String?    @unique
+}
+
+model PurchaceCosts {
+  id                        String    @id @map("_id")
+  priceOfLand               Float
+  reconstructionCosts       Float
+  additionalPurchaseCharges Float
+  Financing                 Financing @relation(fields: [financingId], references: [id])
+  financingId               String    @unique
 }
