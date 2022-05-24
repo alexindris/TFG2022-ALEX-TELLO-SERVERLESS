@@ -39,6 +39,19 @@ model Financing {
   purchaceCostsId   String         @unique
 }
 
+model Household {
+  id                  String           @id @map("_id")
+  applicationNumber   String
+  adultsInHousehold   Int
+  childrenInHousehold Int
+  iban                String
+  bic                 String
+  earningCapacity     EarningCapacity?
+  monthlyExpenses     MonthlyExpenses?
+}
+
+// Auxiliary models
+
 model Address {
   id          String    @id @map("_id")
   applicant   Applicant @relation(fields: [applicantId], references: [id])
@@ -105,4 +118,32 @@ model PurchaceCosts {
   additionalPurchaseCharges Float
   Financing                 Financing @relation(fields: [financingId], references: [id])
   financingId               String    @unique
+}
+
+model EarningCapacity {
+  id                           String    @id @map("_id")
+  salaryFirstApplicant         Float
+  salarySecondApplicant        Float
+  rentalIncomeFinancedProperty Float
+  rentalIncomeOtherProperties  Float
+  furtherIncome                Float
+  childBenefit                 Float
+  assetsOnBankAccounts         Float
+  assetsOther                  Float
+  Household                    Household @relation(fields: [householdId], references: [id])
+  householdId                  String    @unique
+}
+
+model MonthlyExpenses {
+  id                             String    @id @map("_id")
+  healthInsuranceFirstApplicant  Float
+  healthInsuranceSecondApplicant Float
+  otherLoansRemainderOfDebt      Float
+  otherLoansMonthlyRepayments    Float
+  costOfLiving                   Float
+  rent                           Float
+  rentNotApplicableInFuture      Boolean
+  Household                      Household @relation(fields: [householdId], references: [id])
+  householdId                    String    @unique
+
 }
