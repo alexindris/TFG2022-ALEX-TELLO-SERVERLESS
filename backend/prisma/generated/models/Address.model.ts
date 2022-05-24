@@ -7,7 +7,7 @@ export class Address {
     id!: string;
 
     @IsDefined()
-    applicant!: Applicant;
+    Applicant!: Applicant;
 
     @IsDefined()
     @IsString()

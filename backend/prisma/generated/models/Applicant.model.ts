@@ -1,5 +1,5 @@
-import { IsString, IsDefined, IsDate, IsIn } from "class-validator";
-import { Address } from "./";
+import { IsString, IsDefined, IsDate, IsIn, IsOptional } from "class-validator";
+import { Address, Application } from "./";
 import { getEnumValues } from "../helpers";
 import { Business, Employment, MaritalStatus } from "../enums";
 
@@ -37,17 +37,23 @@ export class Applicant {
     birthday!: Date;
 
     @IsDefined()
-    address!: Address[];
+    Address!: Address[];
 
     @IsDefined()
     @IsIn(getEnumValues(Business))
-    business!: Business;
+    Business!: Business;
 
     @IsDefined()
     @IsIn(getEnumValues(Employment))
-    employment!: Employment;
+    Employment!: Employment;
 
     @IsDefined()
     @IsIn(getEnumValues(MaritalStatus))
     maritalStatus!: MaritalStatus;
+
+    @IsOptional()
+    FirstApplicant?: Application;
+
+    @IsOptional()
+    SecondApplicant?: Application;
 }

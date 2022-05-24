@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsBoolean } from "class-validator";
-import { Household } from "./";
+import { HouseHold } from "./";
 
 export class MonthlyExpenses {
     @IsDefined()
@@ -29,7 +29,7 @@ export class MonthlyExpenses {
     rentNotApplicableInFuture!: boolean;
 
     @IsDefined()
-    Household!: Household;
+    Household!: HouseHold;
 
     @IsDefined()
     @IsString()

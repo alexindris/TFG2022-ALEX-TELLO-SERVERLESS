@@ -1,7 +1,7 @@
 import { IsString, IsDefined, IsInt, IsOptional } from "class-validator";
-import { EarningCapacity, MonthlyExpenses } from "./";
+import { EarningCapacity, MonthlyExpenses, Application } from "./";
 
-export class Household {
+export class HouseHold {
     @IsDefined()
     @IsString()
     id!: string;
@@ -27,8 +27,11 @@ export class Household {
     bic!: string;
 
     @IsOptional()
-    earningCapacity?: EarningCapacity;
+    EarningCapacity?: EarningCapacity;
 
     @IsOptional()
-    monthlyExpenses?: MonthlyExpenses;
+    MonthlyExpenses?: MonthlyExpenses;
+
+    @IsDefined()
+    Application!: Application;
 }

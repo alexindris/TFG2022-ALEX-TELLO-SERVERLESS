@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsOptional } from "class-validator";
-import { OwnResources, PurchaceCosts, Loan } from "./";
+import { OwnResources, PurchaseCosts, Loan, Application } from "./";
 
 export class Financing {
     @IsDefined()
@@ -14,13 +14,13 @@ export class Financing {
     financingNeeds!: Float;
 
     @IsOptional()
-    ownResources?: OwnResources;
+    OwnResources?: OwnResources;
 
     @IsOptional()
-    purchaceCosts?: PurchaceCosts;
+    PurchaseCosts?: PurchaseCosts;
 
     @IsDefined()
-    loans!: Loan[];
+    Loans!: Loan[];
 
     @IsDefined()
     @IsString()
@@ -28,5 +28,8 @@ export class Financing {
 
     @IsDefined()
     @IsString()
-    purchaceCostsId!: string;
+    purchaseCostsId!: string;
+
+    @IsDefined()
+    Application!: Application;
 }

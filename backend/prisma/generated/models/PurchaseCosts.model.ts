@@ -1,7 +1,7 @@
 import { IsString, IsDefined } from "class-validator";
 import { Financing } from "./";
 
-export class PurchaceCosts {
+export class PurchaseCosts {
     @IsDefined()
     @IsString()
     id!: string;

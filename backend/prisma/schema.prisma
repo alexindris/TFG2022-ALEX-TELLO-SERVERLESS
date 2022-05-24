@@ -11,54 +11,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model applications {
-  id          String @id @map("_id")
-  description String
-  name        String
+model Application {
+  id                String     @id @map("_id")
+  FirstApplicant    Applicant  @relation("FirstApplicant", fields: [firstApplicantId], references: [id])
+  SecondApplicant   Applicant  @relation("SecondApplicant", fields: [secondApplicantId], references: [id])
+  Financing         Financing?
+  HouseHold         HouseHold?
+  applicantId       String?    @unique
+  firstApplicantId  String     @unique
+  secondApplicantId String     @unique
 }
 
 model Applicant {
   id                String        @id @map("_id")
-  applicationNumber String
+  applicationNumber String        @unique
   applicantNumber   String
   firstName         String
   lastName          String
   employer          String
   employedSince     DateTime
   birthday          DateTime
-  address           Address[]
-  business          Business
-  employment        Employment
+  Address           Address[]
+  Business          Business
+  Employment        Employment
   maritalStatus     MaritalStatus
+  FirstApplicant    Application?  @relation("FirstApplicant")
+  SecondApplicant   Application?  @relation("SecondApplicant")
 }
 
 model Financing {
   id                String         @id @map("_id")
-  applicationNumber String
+  applicationNumber String         @unique
   financingNeeds    Float
-  ownResources      OwnResources?
-  purchaceCosts     PurchaceCosts?
-  loans             Loan[]
+  OwnResources      OwnResources?
+  PurchaseCosts     PurchaseCosts?
+  Loans             Loan[]
   ownResourcesId    String         @unique
-  purchaceCostsId   String         @unique
+  purchaseCostsId   String         @unique @map("purchaseCostsId")
+  Application       Application    @relation(fields: [applicationNumber], references: [id])
 }
 
-model Household {
+model HouseHold {
   id                  String           @id @map("_id")
-  applicationNumber   String
+  applicationNumber   String           @unique
   adultsInHousehold   Int
   childrenInHousehold Int
   iban                String
   bic                 String
-  earningCapacity     EarningCapacity?
-  monthlyExpenses     MonthlyExpenses?
+  EarningCapacity     EarningCapacity?
+  MonthlyExpenses     MonthlyExpenses?
+  Application         Application      @relation(fields: [applicationNumber], references: [id])
 }
 
 // Auxiliary models
 
 model Address {
   id          String    @id @map("_id")
-  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  Applicant   Applicant @relation(fields: [applicantId], references: [id])
   applicantId String
   userId      String
   street      String
@@ -115,7 +124,7 @@ model OwnResources {
   financingId                String?    @unique
 }
 
-model PurchaceCosts {
+model PurchaseCosts {
   id                        String    @id @map("_id")
   priceOfLand               Float
   reconstructionCosts       Float
@@ -134,7 +143,7 @@ model EarningCapacity {
   childBenefit                 Float
   assetsOnBankAccounts         Float
   assetsOther                  Float
-  Household                    Household @relation(fields: [householdId], references: [id])
+  Household                    HouseHold @relation(fields: [householdId], references: [id])
   householdId                  String    @unique
 }
 
@@ -147,7 +156,7 @@ model MonthlyExpenses {
   costOfLiving                   Float
   rent                           Float
   rentNotApplicableInFuture      Boolean
-  Household                      Household @relation(fields: [householdId], references: [id])
+  Household                      HouseHold @relation(fields: [householdId], references: [id])
   householdId                    String    @unique
 
 }

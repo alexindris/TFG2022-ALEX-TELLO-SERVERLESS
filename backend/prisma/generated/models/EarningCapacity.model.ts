@@ -1,5 +1,5 @@
 import { IsString, IsDefined } from "class-validator";
-import { Household } from "./";
+import { HouseHold } from "./";
 
 export class EarningCapacity {
     @IsDefined()
@@ -31,7 +31,7 @@ export class EarningCapacity {
     assetsOther!: Float;
 
     @IsDefined()
-    Household!: Household;
+    Household!: HouseHold;
 
     @IsDefined()
     @IsString()
