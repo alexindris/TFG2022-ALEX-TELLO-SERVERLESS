@@ -1,0 +1,10 @@
+export enum Employment {
+    EMPLOYEE = "EMPLOYEE",
+    OFFICIAL = "OFFICIAL",
+    PENSIONER = "PENSIONER",
+    STUDENT = "STUDENT",
+    TRAINEE = "TRAINEE",
+    FREELANCER = "FREELANCER",
+    UNEMPLOYED = "UNEMPLOYED",
+    OTHER = "OTHER"
+}

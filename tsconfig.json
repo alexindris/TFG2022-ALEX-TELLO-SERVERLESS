@@ -3,6 +3,8 @@
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "lib": [
       "esnext"
     ],
