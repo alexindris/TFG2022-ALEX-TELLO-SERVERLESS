@@ -3,14 +3,6 @@ import { Api, StackContext, StaticSite } from "@serverless-stack/resources";
 export function BigPugBank({ stack }: StackContext) {
   // Create a HTTP API
   const api = new Api(stack, "Api", {
-    defaults: {
-      function: {
-        environment: {
-          MONGODB_URI: process.env.MONGODB_URI ?? "default_uri",
-          MONGODB_DB_NAME: process.env.MONGODB_DB_NAME ?? "default_db_name",
-        },
-      },
-    },
     routes: {
       "GET /applications": "./api/applications.getAll",
       "POST /applications": "./api/applications.create",

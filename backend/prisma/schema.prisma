@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model applications {
+  id          String @id @map("_id")
+  description String
+  name        String
+}
+
+model Applicant {
+  id      String    @id @map("_id")
+  applicationNumber String
+  applicantNumber String
+  firstName String
+  lastName String
+  employer String
+  employedSince DateTime
+  birthday DateTime
+  address Address[]
+  business Business
+  employment Employment
+  maritalStatus MaritalStatus
+}
+
+model Address {
+  id          String    @id @map("_id")
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  applicantId String
+  userId      String
+  street      String
+  city        String
+  postCode    String
+
+}
+
+enum Business {
+  BANKING
+  INSURANCE
+  ENERGY
+  CONSTRUCTION
+  AGRICULTURE
+  INDUSTRY
+  PUBLIC_SERVICE
+  OTHER
+} 
+
+enum Employment {
+  EMPLOYEE
+  OFFICIAL
+  PENSIONER
+  STUDENT
+  TRAINEE
+  FREELANCER
+  UNEMPLOYED
+  OTHER
+}
+
+enum MaritalStatus {
+  MARRIED
+  SINGLE
+  DIVORCED
+  WIDOWED
+}
