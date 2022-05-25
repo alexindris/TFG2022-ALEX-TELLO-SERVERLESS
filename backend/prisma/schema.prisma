@@ -2,77 +2,54 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator class_validator {
-  provider = "prisma-class-validator-generator"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Application {
-  id                String     @id @map("_id")
-  FirstApplicant    Applicant  @relation("FirstApplicant", fields: [firstApplicantId], references: [id])
-  SecondApplicant   Applicant  @relation("SecondApplicant", fields: [secondApplicantId], references: [id])
-  Financing         Financing?
-  HouseHold         HouseHold?
-  applicantId       String?    @unique
-  firstApplicantId  String     @unique
-  secondApplicantId String     @unique
+  id              String    @id @map("_id")
+  FirstApplicant  Applicant
+  SecondApplicant Applicant
+  Financing       Financing
+  HouseHold       HouseHold
 }
 
-model Applicant {
-  id                String        @id @map("_id")
-  applicationNumber String        @unique
-  applicantNumber   String
-  firstName         String
-  lastName          String
-  employer          String
-  employedSince     DateTime
-  birthday          DateTime
-  Address           Address[]
-  Business          Business
-  Employment        Employment
-  maritalStatus     MaritalStatus
-  FirstApplicant    Application?  @relation("FirstApplicant")
-  SecondApplicant   Application?  @relation("SecondApplicant")
+type Applicant {
+  applicantNumber String
+  firstName       String
+  lastName        String
+  employer        String
+  employedSince   DateTime
+  birthday        DateTime
+  Address         Address
+  Business        Business
+  Employment      Employment
+  maritalStatus   MaritalStatus
 }
 
-model Financing {
-  id                String         @id @map("_id")
-  applicationNumber String         @unique
-  financingNeeds    Float
-  OwnResources      OwnResources?
-  PurchaseCosts     PurchaseCosts?
-  Loans             Loan[]
-  ownResourcesId    String         @unique
-  purchaseCostsId   String         @unique @map("purchaseCostsId")
-  Application       Application    @relation(fields: [applicationNumber], references: [id])
+type Financing {
+  financingNeeds Float
+  OwnResources   OwnResources
+  PurchaseCosts  PurchaseCosts
+  Loans          Loan[]
 }
 
-model HouseHold {
-  id                  String           @id @map("_id")
-  applicationNumber   String           @unique
+type HouseHold {
   adultsInHousehold   Int
   childrenInHousehold Int
   iban                String
   bic                 String
-  EarningCapacity     EarningCapacity?
-  MonthlyExpenses     MonthlyExpenses?
-  Application         Application      @relation(fields: [applicationNumber], references: [id])
+  EarningCapacity     EarningCapacity
+  MonthlyExpenses     MonthlyExpenses
 }
 
 // Auxiliary models
 
-model Address {
-  id          String    @id @map("_id")
-  Applicant   Applicant @relation(fields: [applicantId], references: [id])
-  applicantId String
-  userId      String
-  street      String
-  city        String
-  postCode    String
+type Address {
+  street   String
+  city     String
+  postCode String
 
 }
 
@@ -105,36 +82,26 @@ enum MaritalStatus {
   WIDOWED
 }
 
-model Loan {
-  id                       String     @id @map("_id")
+type Loan {
   loanAmount               Float
   interestRate             Float
   repaymentInPercent       Float
   fixedInterestRateInYears Float
-  Financing                Financing? @relation(fields: [financingId], references: [id])
-  financingId              String?
 }
 
-model OwnResources {
-  id                         String     @id @map("_id")
+type OwnResources {
   liquidAssets               Float
   balanceFromBuildingSociety Float
   ownManpower                Float
-  Financing                  Financing? @relation(fields: [financingId], references: [id])
-  financingId                String?    @unique
 }
 
-model PurchaseCosts {
-  id                        String    @id @map("_id")
+type PurchaseCosts {
   priceOfLand               Float
   reconstructionCosts       Float
   additionalPurchaseCharges Float
-  Financing                 Financing @relation(fields: [financingId], references: [id])
-  financingId               String    @unique
 }
 
-model EarningCapacity {
-  id                           String    @id @map("_id")
+type EarningCapacity {
   salaryFirstApplicant         Float
   salarySecondApplicant        Float
   rentalIncomeFinancedProperty Float
@@ -143,12 +110,9 @@ model EarningCapacity {
   childBenefit                 Float
   assetsOnBankAccounts         Float
   assetsOther                  Float
-  Household                    HouseHold @relation(fields: [householdId], references: [id])
-  householdId                  String    @unique
 }
 
-model MonthlyExpenses {
-  id                             String    @id @map("_id")
+type MonthlyExpenses {
   healthInsuranceFirstApplicant  Float
   healthInsuranceSecondApplicant Float
   otherLoansRemainderOfDebt      Float
@@ -156,7 +120,5 @@ model MonthlyExpenses {
   costOfLiving                   Float
   rent                           Float
   rentNotApplicableInFuture      Boolean
-  Household                      HouseHold @relation(fields: [householdId], references: [id])
-  householdId                    String    @unique
 
 }
