@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@big-pug-bank/backend",
   "version": "0.0.0",
   "type": "module",
   "scripts": {},
