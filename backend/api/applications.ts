@@ -10,7 +10,7 @@ export async function getAll(event, context) {
   // Get all applications from the database
   connectToDatabase();
 
-  const applications = await db.applications.findMany();
+  const applications = await db.application.findMany();
 
   disconnectFromDatabase();
   return {
@@ -26,7 +26,7 @@ export async function create(event, context) {
   const application = JSON.parse(event.body);
 
   // Add the application to the database
-  await db.applications.create({ data: application });
+  await db.application.create({ data: application });
 
   disconnectFromDatabase();
   return {
@@ -41,7 +41,7 @@ export async function getOne(event, context) {
 
   const id = event.pathParameters.id;
 
-  const application = await db.applications.findUnique({ where: { id: id } });
+  const application = await db.application.findUnique({ where: { id: id } });
 
   if (!application) {
     return {
