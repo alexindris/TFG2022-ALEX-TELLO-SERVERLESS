@@ -25,7 +25,7 @@ type Applicant {
   Address         Address
   Business        Business
   Employment      Employment
-  maritalStatus   MaritalStatus
+  MaritalStatus   MaritalStatus
 }
 
 type Financing {
