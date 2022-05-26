@@ -1,4 +1,4 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-
-createApp(App).mount("#app");
+import VueFormulate from "@braid/vue-formulate";
+createApp(App).use(VueFormulate).mount("#app");

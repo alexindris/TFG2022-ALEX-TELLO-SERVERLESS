@@ -1,8 +1,22 @@
 <template>
-  <div className="App">
-    <p>You clicked me {{ count }} times.</p>
-    <button @click="onClick()">Click Me!</button>
-  </div>
+  <FormulateForm
+  v-model="formValues"
+>
+  <FormulateInput
+    name="name"
+    label="What is your name?"
+    validation="required"
+  />
+  <FormulateInput
+    name="age"
+    label="How old are you?"
+    validation="required|number|max:120"
+  />
+  <FormulateInput
+    type="submit"
+    label="Sign up"
+  />
+</FormulateForm>
 </template>
 
 <script>
