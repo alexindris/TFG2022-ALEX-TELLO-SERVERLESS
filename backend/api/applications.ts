@@ -1,10 +1,8 @@
-import { assert } from "superstruct";
 import {
   db,
   connectToDatabase,
   disconnectFromDatabase,
 } from "../database/mongodb";
-import { ApplicantValidator, ApplicationValidator } from "../utils/validators";
 
 export async function getAll(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -26,7 +24,6 @@ export async function create(event, context) {
   connectToDatabase();
 
   const application = JSON.parse(event.body);
-  assert(application, ApplicationValidator)
 
   // Add the application to the database
   await db.application.create({ data: application });
