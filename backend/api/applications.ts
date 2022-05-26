@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import {
   db,
   connectToDatabase,
@@ -24,6 +25,8 @@ export async function create(event, context) {
   connectToDatabase();
 
   const application = JSON.parse(event.body);
+
+  application.id = randomUUID().toString();
 
   // Add the application to the database
   await db.application.create({ data: application });
