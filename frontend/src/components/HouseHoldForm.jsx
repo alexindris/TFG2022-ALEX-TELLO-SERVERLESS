@@ -93,7 +93,11 @@ export default function HouseHoldForm(props) {
           </Form.Group>
           <Form.Group >
             <Form.Label>Rent Not Applicable In Future</Form.Label>
-            <Form.Control type="checkbox" {...register("MonthlyExpenses.rentNotApplicableInFuture", { required: true })} />
+            <Form.Control as="select" {...register("MonthlyExpenses.rentNotApplicableInFuture", { required: true })}>
+              <option value="" hidden></option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit

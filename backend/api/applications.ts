@@ -26,7 +26,11 @@ export async function create(event, context) {
 
   const application = JSON.parse(event.body);
 
+  console.log(application);
+
   application.id = randomUUID().toString();
+  application.FirstApplicant.applicantNumber = randomUUID().toString();
+  application.SecondApplicant.applicantNumber = randomUUID().toString();
 
   // Add the application to the database
   await db.application.create({ data: application });

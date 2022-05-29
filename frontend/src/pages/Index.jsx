@@ -14,8 +14,3 @@ export default function Index() {
     </div>
   )
 }
-
-export const meta = {
-  title: 'BigBugBank Title',
-  sort: 0
-}
