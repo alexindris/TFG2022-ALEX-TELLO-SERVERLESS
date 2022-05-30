@@ -1,0 +1,11 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "private": true,
+  "config": {
+    "access": "private"
+  },
+  "scripts": {
+    "compile": "tsc --project tsconfig.json"
+  }
+}

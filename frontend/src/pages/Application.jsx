@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 export default function ApplicationForm() {
   const data = { FirstApplicant: {}, SecondApplicant: {}, Financing: {}, HouseHold: {} };
   const submit = () => {
-    console.log(data);
+    console.log(process.env.VITE_API_URL);
     if (isEmpty(data.FirstApplicant || data.SecondApplicant || data.Financing || data.HouseHold)) swalError()
     else {
       postForm(data);
@@ -47,8 +47,8 @@ function swalConfirm(params) {
   })
 }
 function postForm(data) {
-  // fetch(`${process.env.REACT_APP_API_URL}/applications`, {
-  fetch(`https://g6o435n45c.execute-api.eu-west-3.amazonaws.com//applications`, {
+  fetch(`${process.env.REACT_APP_API_URL}/applications`, {
+    // fetch(`https://bsv1h7u4pd.execute-api.eu-west-3.amazonaws.com/applications`, {
     method: "POST",
     mode: 'no-cors', // no-cors, *cors, same-origin
     body: JSON.stringify(data),

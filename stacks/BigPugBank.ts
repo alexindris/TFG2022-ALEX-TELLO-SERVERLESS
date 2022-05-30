@@ -2,6 +2,7 @@ import {
   Api,
   ReactStaticSite,
   StackContext,
+  ViteStaticSite,
 } from "@serverless-stack/resources";
 
 export function BigPugBank({ stack }: StackContext) {
@@ -11,6 +12,7 @@ export function BigPugBank({ stack }: StackContext) {
       function: {
         environment: {
           DATABASE_URL: process.env.DATABASE_URL ?? "default_uri",
+          DATABASE_NAME: process.env.DATABASE_NAME ?? "test",
         },
       },
     },
@@ -21,10 +23,10 @@ export function BigPugBank({ stack }: StackContext) {
     },
   });
 
-  const site = new ReactStaticSite(stack, "ReactSite", {
+  const site = new ViteStaticSite(stack, "ReactSite", {
     path: "frontend",
     environment: {
-      REACT_APP_API_URL: api.url,
+      VITE_API_URL: api.url,
     },
   });
 

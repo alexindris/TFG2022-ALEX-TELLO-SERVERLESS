@@ -1,54 +1,55 @@
 import { randomUUID } from "crypto";
-import {
-  db,
-  connectToDatabase,
-  disconnectFromDatabase,
-} from "../database/mongodb";
+import { connectToDatabase } from "../database/mongodb";
+import { Application } from "shared/models/Application";
+import { ObjectId } from "bson";
 
 export async function getAll(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
 
   // Get all applications from the database
-  connectToDatabase();
+  const db = await connectToDatabase();
 
-  const applications = await db.application.findMany();
+  const applications: Application[] = (await db
+    .collection("Application")
+    .find()
+    .toArray()) as unknown as Application[];
 
-  disconnectFromDatabase();
   return {
     statusCode: 200,
-    body: applications,
+    body: JSON.stringify(applications),
+    headers: { "Content-Type": "application/json" },
   };
 }
 
 export async function create(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
-  connectToDatabase();
+  const db = await connectToDatabase();
 
-  const application = JSON.parse(event.body);
+  const application: Application = JSON.parse(event.body);
 
-  console.log(application);
-
-  application.id = randomUUID().toString();
+  application._id = new ObjectId();
   application.FirstApplicant.applicantNumber = randomUUID().toString();
   application.SecondApplicant.applicantNumber = randomUUID().toString();
 
   // Add the application to the database
-  await db.application.create({ data: application });
+  db.collection("Application").insertOne(application);
 
-  disconnectFromDatabase();
   return {
     statusCode: 200,
-    body: application,
+    body: JSON.stringify(application),
+    headers: { "Content-Type": "application/json" },
   };
 }
 
 export async function getOne(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
-  connectToDatabase();
+  const db = await connectToDatabase();
 
   const id = event.pathParameters.id;
 
-  const application = await db.application.findUnique({ where: { id: id } });
+  const application: Application | null = (await db
+    .collection("Application")
+    .findOne({ id: id })) as unknown as Application;
 
   if (!application) {
     return {
@@ -59,6 +60,7 @@ export async function getOne(event, context) {
 
   return {
     statusCode: 200,
-    body: application,
+    body: JSON.stringify(application),
+    headers: { "Content-Type": "application/json" },
   };
 }

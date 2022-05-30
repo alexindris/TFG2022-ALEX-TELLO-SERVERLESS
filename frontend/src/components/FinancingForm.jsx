@@ -12,7 +12,6 @@ export default function FinancingForm(props) {
     props.financing.OwnResources = data.OwnResources;
     props.financing.PurchaseCosts = data.PurchaseCosts;
     props.financing.Loans = [data.Loans1, data.Loans2, data.Loans3, data.Loans4];
-    console.log(props.financing);
   }
 
   return (

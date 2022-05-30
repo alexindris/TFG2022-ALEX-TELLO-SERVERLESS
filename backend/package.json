@@ -4,11 +4,9 @@
   "type": "module",
   "scripts": {},
   "dependencies": {
-    "@prisma/client": "^3.14.0",
     "aws-sdk": "^2.1135.0",
     "mongodb": "^4.6.0",
-    "superstruct": "^0.15.4",
-    "validator.ts": "^0.2.2"
+    "shared": "1.0.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.97",
