@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 export default function ApplicationForm() {
   const data = { FirstApplicant: {}, SecondApplicant: {}, Financing: {}, HouseHold: {} };
   const submit = () => {
-    console.log(process.env.VITE_API_URL);
+    console.log(process.env.REACT_APP_API_URL);
     if (isEmpty(data.FirstApplicant || data.SecondApplicant || data.Financing || data.HouseHold)) swalError()
     else {
       postForm(data);

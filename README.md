@@ -1,17 +1,17 @@
-# How to create a Vue.js app
+# How to create a React.js app
 
-An example full-stack serverless Vue.js app created with SST.
+An example full-stack serverless React.js app created with SST.
 
 ## Getting Started
 
-[**Read the tutorial**](https://serverless-stack.com/examples/how-to-create-a-vuejs-app-with-serverless.html)
+[**Read the tutorial**](https://serverless-stack.com/examples/how-to-create-a-reactjs-app-with-serverless.html)
 
 Install the example.
 
 ```bash
-$ npm init serverless-stack --example vue-app
+$ npm init serverless-stack --example react-app
 # Or with Yarn
-$ yarn create serverless-stack --example vue-app
+$ yarn create serverless-stack --example react-app
 ```
 
 ## Commands

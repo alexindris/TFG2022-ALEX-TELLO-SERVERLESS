@@ -2,11 +2,10 @@ import {
   Api,
   ReactStaticSite,
   StackContext,
-  ViteStaticSite,
 } from "@serverless-stack/resources";
 
 export function BigPugBank({ stack }: StackContext) {
-  // Create a HTTP API
+  // Create the HTTP API
   const api = new Api(stack, "Api", {
     defaults: {
       function: {
@@ -23,10 +22,11 @@ export function BigPugBank({ stack }: StackContext) {
     },
   });
 
-  const site = new ViteStaticSite(stack, "ReactSite", {
+  // Deploy our React app
+  const site = new ReactStaticSite(stack, "ReactSite", {
     path: "frontend",
     environment: {
-      VITE_API_URL: api.url,
+      REACT_APP_API_URL: api.url,
     },
   });
 
