@@ -18,16 +18,16 @@ export default function HouseHoldForm(props) {
   return (
     <Accordion.Item eventKey='household' >
 
-      <Accordion.Header>Household  {submitted ? "✔️" : ''}</Accordion.Header>
+      <Accordion.Header>HouseHold  {submitted ? "✔️" : ''}</Accordion.Header>
       <Accordion.Body>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <h2>Household</h2>
+        <Form onSubmit={handleSubmit(onSubmit)} name='HouseHold'>
+          <h2>HouseHold</h2>
           <Form.Group >
-            <Form.Label>Adults in Household</Form.Label>
+            <Form.Label>Adults in HouseHold</Form.Label>
             <Form.Control type="number" {...register("adultsInHousehold", { required: true, min: 1 })} />
           </Form.Group>
           <Form.Group >
-            <Form.Label>Children in Household</Form.Label>
+            <Form.Label>Children in HouseHold</Form.Label>
             <Form.Control type="number" {...register("childrenInHousehold", { required: true, min: 0 })} />
           </Form.Group>
           <Form.Group >

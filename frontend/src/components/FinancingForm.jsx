@@ -23,7 +23,7 @@ export default function FinancingForm(props) {
     <Accordion.Item eventKey='financing'>
       <Accordion.Header>Financing {submitted ? "✔️" : ''}</Accordion.Header>
       <Accordion.Body>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} name={`Financing`}>
           <Form.Group>
             <Form.Label>Financing Needs</Form.Label>
             <Form.Control type="number" {...register("financingNeeds", { required: true })} />

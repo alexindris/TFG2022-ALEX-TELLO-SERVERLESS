@@ -22,7 +22,7 @@ export default function ApplicantForm(props) {
     <Accordion.Item eventKey={props.number ?? '0'}>
       <Accordion.Header>Applicant {props.number ?? ''} {submitted ? "✔️" : ''}</Accordion.Header>
       <Accordion.Body>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} name={`Applicant${props.number}`}>
           <h2>Personal Information</h2>
           <Form.Group >
             <Form.Label>First Name</Form.Label>

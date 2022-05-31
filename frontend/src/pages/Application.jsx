@@ -54,18 +54,17 @@ function swalConfirm(params) {
   })
 }
 async function postForm(data) {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/applications`, {
+  fetch(`${process.env.REACT_APP_API_URL}/applications`, {
     // const response = await fetch(`https://ghrl62f7e8.execute-api.eu-west-1.amazonaws.com/applications`, {
     method: "POST",
     mode: 'no-cors', // no-cors, *cors, same-origin
     body: JSON.stringify(data),
-  })
-
-  if (response.ok) {
+  }).then(response => {
     swalConfirm();
-  } else {
+  }).catch(error => {
     swalWrong();
-  }
+  });
+
 
 }
 
