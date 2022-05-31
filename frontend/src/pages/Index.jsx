@@ -9,7 +9,7 @@ export default function Index() {
       <img src={banner} alt="banner" />
       <h2>Get your big fat pug loan here</h2>
       <Link to='/application'>
-        <Button class="btn btn-primary btn-lg">Yes, I want to apply - &gt;</Button>
+        <Button className="btn btn-primary btn-lg">Yes, I want to apply - &gt;</Button>
       </Link>
     </div>
   )

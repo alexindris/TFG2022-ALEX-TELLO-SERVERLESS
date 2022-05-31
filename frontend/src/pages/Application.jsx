@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 export default function ApplicationForm() {
   const data = { FirstApplicant: {}, SecondApplicant: {}, Financing: {}, HouseHold: {} };
   const submit = () => {
-    console.log(process.env.REACT_APP_API_URL);
     if (isEmpty(data.FirstApplicant || data.SecondApplicant || data.Financing || data.HouseHold)) swalError()
     else {
       postForm(data);
@@ -37,6 +36,14 @@ function swalError(params) {
     confirmButtonText: 'Okay'
   })
 }
+function swalWrong(params) {
+  Swal.fire({
+    title: 'Error!',
+    text: 'Ups, something went wrong. Please try again.',
+    icon: 'error',
+    confirmButtonText: 'Okay'
+  })
+}
 
 function swalConfirm(params) {
   Swal.fire({
@@ -46,14 +53,20 @@ function swalConfirm(params) {
     confirmButtonText: 'Okay'
   })
 }
-function postForm(data) {
-  fetch(`${process.env.REACT_APP_API_URL}/applications`, {
-    // fetch(`https://bsv1h7u4pd.execute-api.eu-west-3.amazonaws.com/applications`, {
+async function postForm(data) {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/applications`, {
+    // const response = await fetch(`https://ghrl62f7e8.execute-api.eu-west-1.amazonaws.com/applications`, {
     method: "POST",
     mode: 'no-cors', // no-cors, *cors, same-origin
     body: JSON.stringify(data),
   })
-    .then((response) => swalConfirm());
+
+  if (response.ok) {
+    swalConfirm();
+  } else {
+    swalWrong();
+  }
+
 }
 
 function isEmpty(object) {

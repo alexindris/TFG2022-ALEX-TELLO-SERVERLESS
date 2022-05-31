@@ -105,7 +105,7 @@ export default function HouseHoldForm(props) {
             </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit">
-            Submit
+            Validate
           </Button>
         </Form>
 
