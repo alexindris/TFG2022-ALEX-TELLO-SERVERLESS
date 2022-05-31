@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
+import { useAccordionButton } from 'react-bootstrap/AccordionButton';
+
 
 
 export default function ApplicantForm(props) {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => Object.assign(props.user, data);
+  const [submitted, setSubmitted] = useState(false)
+  const decoratedOnClick = useAccordionButton(props.number);
+  const onSubmit = (data) => {
+    Object.assign(props.user, data);
+    setSubmitted(true)
+    decoratedOnClick();
+  };
 
 
   return (
     <Accordion.Item eventKey={props.number ?? '0'}>
-      <Accordion.Header>Applicant {props.number ?? ''}</Accordion.Header>
+      <Accordion.Header>Applicant {props.number ?? ''} {submitted ? "✔️" : ''}</Accordion.Header>
       <Accordion.Body>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <h2>Personal Information</h2>

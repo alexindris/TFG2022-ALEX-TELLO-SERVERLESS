@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
-
+import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 export default function HouseHoldForm(props) {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => Object.assign(props.household, data);
-
+  const [submitted, setSubmitted] = useState(false)
+  const decoratedOnClick = useAccordionButton(props.number);
+  const onSubmit = (data) => {
+    Object.assign(props.household, data);
+    setSubmitted(true)
+    decoratedOnClick();
+  };
 
 
   return (
     <Accordion.Item eventKey='household' >
 
-      <Accordion.Header>Household</Accordion.Header>
+      <Accordion.Header>Household  {submitted ? "✔️" : ''}</Accordion.Header>
       <Accordion.Body>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <h2>Household</h2>

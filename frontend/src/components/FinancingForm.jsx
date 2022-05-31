@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 import LoanForm from "./LoanForm";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
 
 export default function FinancingForm(props) {
   const { register, handleSubmit } = useForm();
+  const [submitted, setSubmitted] = useState(false)
+  const decoratedOnClick = useAccordionButton(props.number);
   const onSubmit = (data) => {
     props.financing.financingNeeds = data.financingNeeds;
     props.financing.OwnResources = data.OwnResources;
     props.financing.PurchaseCosts = data.PurchaseCosts;
     props.financing.Loans = [data.Loans1, data.Loans2, data.Loans3, data.Loans4];
+    setSubmitted(true)
+    decoratedOnClick();
   }
 
   return (
     <Accordion.Item eventKey='financing'>
-      <Accordion.Header>Financing</Accordion.Header>
+      <Accordion.Header>Financing {submitted ? "✔️" : ''}</Accordion.Header>
       <Accordion.Body>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group>
