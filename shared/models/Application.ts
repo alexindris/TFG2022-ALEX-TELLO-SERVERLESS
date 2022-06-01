@@ -9,4 +9,5 @@ export interface Application {
   Financing: Financing;
   HouseHold: HouseHold;
   _id?: ObjectId;
+  score?: number;
 }
