@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { connectToDatabase } from "../database/mongodb";
 import { Application } from "shared/models/Application";
 import { ObjectId } from "bson";
+import { sendNotification } from "../services/sendNotificationService";
 
 export async function getAll(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -34,6 +35,10 @@ export async function create(event, context) {
   // Add the application to the database
   db.collection("Application").insertOne(application);
 
+  // Send a message to the queue to score the application
+
+  await sendNotification(process.env.SCORING_QUEUE_NAME, application);
+
   return {
     statusCode: 200,
     body: JSON.stringify(application),
@@ -45,11 +50,11 @@ export async function getOne(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
   const db = await connectToDatabase();
 
-  const id = event.pathParameters.id;
+  const id = new ObjectId(event.pathParameters.id);
 
   const application: Application | null = (await db
     .collection("Application")
-    .findOne({ id: id })) as unknown as Application;
+    .findOne({ _id: id })) as unknown as Application;
 
   if (!application) {
     return {
