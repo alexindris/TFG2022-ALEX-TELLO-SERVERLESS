@@ -1,18 +1,6 @@
-# How to create a React.js app
+# Serverless Bank Financing Application
 
-An example full-stack serverless React.js app created with SST.
-
-## Getting Started
-
-[**Read the tutorial**](https://serverless-stack.com/examples/how-to-create-a-reactjs-app-with-serverless.html)
-
-Install the example.
-
-```bash
-$ npm init serverless-stack --example react-app
-# Or with Yarn
-$ yarn create serverless-stack --example react-app
-```
+This is an application made as a prove of concept of serverless technology using serverless-stack framework
 
 ## Commands
 
