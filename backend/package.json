@@ -6,6 +6,7 @@
   "dependencies": {
     "aws-sdk": "^2.1145.0",
     "mongodb": "^4.6.0",
+    "node-fetch": "^3.2.5",
     "shared": "1.0.0"
   },
   "devDependencies": {

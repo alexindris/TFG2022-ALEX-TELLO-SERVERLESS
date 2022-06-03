@@ -6,8 +6,7 @@ import {
 } from "@serverless-stack/resources";
 
 export function BigPugBank({ stack }: StackContext) {
-  // Create Queue
-
+  // Create ResultQueue
   const resultQueue = new Queue(stack, "resultQueue", {
     consumer: {
       function: {
@@ -21,6 +20,7 @@ export function BigPugBank({ stack }: StackContext) {
     },
   });
 
+  // Create ScoringQueue
   const scoringQueue = new Queue(stack, "scoringQueue", {
     consumer: {
       function: {
