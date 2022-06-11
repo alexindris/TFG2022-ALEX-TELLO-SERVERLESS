@@ -9,13 +9,24 @@ export async function score(event: SQSEvent) {
   );
 
   applications.forEach(async (application: Application) => {
+    //  Make a request to the mock API to get the score
     const result = await fetch(
-      "http://www.randomnumberapi.com/api/v1.0/random?min=1&max=100&count=1"
+      "https://62a46144259aba8e10e750c0.mockapi.io/scoring/api/v1/apply",
+      {
+        method: "POST",
+        body: JSON.stringify(application),
+      }
     );
 
-    const score = await result.json();
+    const response = (await result.json()) as response;
 
-    application.score = score[0];
+    application.score = response.score;
     sendNotification(process.env.RESULT_QUEUE_NAME, application);
   });
 }
+
+type response = {
+  createdAt: string;
+  score: number;
+  id: string;
+};
