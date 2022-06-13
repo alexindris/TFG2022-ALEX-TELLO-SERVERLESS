@@ -1,6 +1,15 @@
 # Serverless Bank Financing Application
 
 This is an application made as a prove of concept of serverless technology using serverless-stack framework
+In order to be able to test the aplication first you need to copy the file .env.example to .env and fill in the values
+then you need to run the following command:
+
+```sh
+
+npm install
+npm run start
+# You might be asked for to login to your aws cli
+```
 
 ## Commands
 
