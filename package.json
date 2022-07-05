@@ -9,7 +9,8 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test:run": "cypress run",
+    "test:open": "cypress open"
   },
   "devDependencies": {
     "@serverless-stack/cli": "^1.2.11",
