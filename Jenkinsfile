@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('List') {
       parallel {
-        stage('List') {
+        stage('List Message') {
           steps {
             echo 'Listing files'
           }
         }
 
-        stage('') {
+        stage('List all files') {
           steps {
             sh 'ls -la'
           }
