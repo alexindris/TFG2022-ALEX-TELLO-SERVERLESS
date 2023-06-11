@@ -1,15 +1,14 @@
-import { Application } from "shared/models/Application";
-import { SQSEvent } from "aws-lambda";
+import { type Application } from "shared/models/Application";
+import { type SQSEvent } from "aws-lambda";
 import { sendNotification } from "../services/sendNotificationService";
 import fetch from "node-fetch";
 
-export async function score(event: SQSEvent) {
+export async function score(event: SQSEvent):Promise<void> {
   const applications: Application[] = event.Records.map((record) =>
     JSON.parse(record.body)
   );
 
-  applications.forEach(async (application: Application) => {
-    //  Make a request to the mock API to get the score
+  for (const application of applications) {
     const result = await fetch(
       "https://62a46144259aba8e10e750c0.mockapi.io/scoring/api/v1/apply",
       {
@@ -18,15 +17,16 @@ export async function score(event: SQSEvent) {
       }
     );
 
-    const response = (await result.json()) as response;
+    const response = await result.json() as Response;
 
     application.score = response.score;
-    sendNotification(process.env.RESULT_QUEUE_NAME, application);
-  });
+    await sendNotification(process.env.RESULT_QUEUE_NAME?? 'RESULT_QUEUE_NAME' , application);
+  }
 }
 
-type response = {
+
+interface Response {
   createdAt: string;
   score: number;
   id: string;
-};
+}

@@ -1,17 +1,19 @@
 import AWS from "aws-sdk";
 
-export async function sendNotification(queueName: string, data: Object) {
+export async function sendNotification(queueName: string, data: unknown): Promise<void> {
   const sqs = new AWS.SQS();
 
-  const queueUrl = await sqs.getQueueUrl({ QueueName: queueName }).promise();
+  const queueUrlResponse = await sqs.getQueueUrl({ QueueName: queueName }).promise();
+  const queueUrl = queueUrlResponse.QueueUrl;
 
-  await sqs
-    .sendMessage({
-      QueueUrl: queueUrl.QueueUrl,
-      MessageBody: JSON.stringify(data),
-    })
-    .promise()
-    .catch((err) => {
-      throw err;
-    });
+  if (queueUrl == null) {
+    throw new Error('Queue URL not found.');
+  }
+
+  await sqs.sendMessage({
+    QueueUrl: queueUrl,
+    MessageBody: JSON.stringify(data),
+  }).promise().catch((err) => {
+    throw err;
+  });
 }

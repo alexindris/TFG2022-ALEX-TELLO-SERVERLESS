@@ -1,10 +1,11 @@
 import { randomUUID } from "crypto";
 import { connectToDatabase } from "../database/mongodb";
-import { Application } from "shared/models/Application";
+import { type Application } from "shared/models/Application";
 import { ObjectId } from "bson";
 import { sendNotification } from "../services/sendNotificationService";
+import { type APIGatewayProxyResult, type Context,type APIGatewayEvent } from "aws-lambda";
 
-export async function getAll(event, context) {
+export async function getAll(event:APIGatewayEvent, context:Context): Promise<APIGatewayProxyResult> {
   context.callbackWaitsForEmptyEventLoop = false;
 
   // Get all applications from the database
@@ -22,22 +23,27 @@ export async function getAll(event, context) {
   };
 }
 
-export async function create(event, context) {
+export async function create(event:APIGatewayEvent, context:Context): Promise<APIGatewayProxyResult> {
   context.callbackWaitsForEmptyEventLoop = false;
   const db = await connectToDatabase();
 
-  const application: Application = JSON.parse(event.body);
+  const requestBody = event.body;
+  if (requestBody == null) {
+    throw new Error("Missing request body.");
+  }
+
+  const application: Application = JSON.parse(requestBody);
 
   application._id = new ObjectId();
   application.FirstApplicant.applicantNumber = randomUUID().toString();
   application.SecondApplicant.applicantNumber = randomUUID().toString();
 
   // Add the application to the database
-  db.collection("Application").insertOne(application);
+  await db.collection("Application").insertOne(application);
 
   // Send a message to the queue to score the application
 
-  await sendNotification(process.env.SCORING_QUEUE_NAME, application);
+  await sendNotification(process.env.SCORING_QUEUE_NAME?? 'scoring_queue_name', application);
 
   return {
     statusCode: 200,
@@ -46,17 +52,17 @@ export async function create(event, context) {
   };
 }
 
-export async function getOne(event, context) {
+export async function getOne(event:APIGatewayEvent, context:Context): Promise<APIGatewayProxyResult> {
   context.callbackWaitsForEmptyEventLoop = false;
   const db = await connectToDatabase();
 
-  const id = new ObjectId(event.pathParameters.id);
+  const id = new ObjectId(event.pathParameters?.id);
 
-  const application: Application | null = (await db
+  const application = (await db
     .collection("Application")
-    .findOne({ _id: id })) as unknown as Application;
+    .findOne({ _id: id })) ;
 
-  if (!application) {
+  if (application == null) {
     return {
       statusCode: 404,
       body: "Application not found",
