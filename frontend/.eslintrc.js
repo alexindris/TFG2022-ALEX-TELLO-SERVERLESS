@@ -9,8 +9,8 @@ module.exports = {
   },
   rules: {
     // disable Prop spreading is forbidden
-    'react/jsx-props-no-spreading': 'off',
-    'react/prop-types': 'off',
-    'no-param-reassign': 'off',
+    'react/jsx-props-no-spreading': 'off', // We want to use prop spreading
+    'react/prop-types': 'off', //   We won't use prop-types package
+    'no-param-reassign': 'off',  // We want to use param reassign
   },
 };
