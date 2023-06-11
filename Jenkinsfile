@@ -4,7 +4,6 @@ pipeline {
       image 'node:lts-alpine'
       args '-p 3000:3000'
     }
-
   }
   stages {
     stage('Preparation') {
@@ -14,12 +13,14 @@ pipeline {
     }
     stage('Lint') {
       steps {
+        parallel(
           'Lint Frontend': {
             sh 'npm run lint -w frontend'
           },
           'Lint Backend': {
             sh 'npm run lint -w backend'
           }
+        )
       }
     }
     stage('Build') {
@@ -27,6 +28,5 @@ pipeline {
         sh 'npm run build'
       }
     }
-
   }
 }
