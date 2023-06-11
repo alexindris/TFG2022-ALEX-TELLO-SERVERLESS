@@ -12,6 +12,16 @@ pipeline {
         sh 'npm install'
       }
     }
+    stage('Lint') {
+      steps {
+          'Lint Frontend': {
+            sh 'npm run lint -w frontend'
+          },
+          'Lint Backend': {
+            sh 'npm run lint -w backend'
+          }
+      }
+    }
     stage('Build') {
       steps {
         sh 'npm run build'
