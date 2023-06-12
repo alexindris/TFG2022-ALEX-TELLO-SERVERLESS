@@ -24,36 +24,39 @@ export default function ApplicantForm({ user, number }) {
         <Form onSubmit={handleSubmit(onSubmit)} name={`Applicant${number}`}>
           <h2>Personal Information</h2>
           <Form.Group>
-            <Form.Label>First Name</Form.Label>
+            <Form.Label htmlFor="firstName">First Name</Form.Label>
             <Form.Control
-              {...register('firstName', { required: true, maxLength: 20 })}
+              id="firstName"
+              {...register(`firstName`, { required: true, maxLength: 20 })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Last Name</Form.Label>
+            <Form.Label htmlFor="lastName">Last Name</Form.Label>
             <Form.Control
-              {...register('lastName', {
+              id="lastName"
+              {...register(`lastName`, {
                 required: true,
                 pattern: /^[A-Za-z]+$/i,
               })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Birthday</Form.Label>
+            <Form.Label htmlFor="birthday">Birthday</Form.Label>
             <Form.Control
+              id="birthday"
               type="date"
-              {...register('birthday', { required: true })}
+              {...register(`birthday`, { required: true })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>MaritalStatus</Form.Label>
+            <Form.Label htmlFor="maritalStatus">Marital Status</Form.Label>
             <Form.Control
+              id="maritalStatus"
               as="select"
-              {...register('MaritalStatus', { required: true })}
+              {...register(`maritalStatus`, { required: true })}
             >
               <option value="" hidden>
-                {' '}
-                -- select an option --{' '}
+                -- select an option --
               </option>
               <option value="MARRIED">MARRIED</option>
               <option value="SINGLE">SINGLE</option>
@@ -64,29 +67,37 @@ export default function ApplicantForm({ user, number }) {
 
           <h2>Address</h2>
           <Form.Group>
-            <Form.Label>Street</Form.Label>
-            <Form.Control {...register('Address.street', { required: true })} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>City</Form.Label>
-            <Form.Control {...register('Address.city', { required: true })} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Post Code</Form.Label>
+            <Form.Label htmlFor="street">Street</Form.Label>
             <Form.Control
-              {...register('Address.postCode', { required: true })}
+              id="street"
+              {...register(`Address.street`, { required: true })}
             />
           </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="city">City</Form.Label>
+            <Form.Control
+              id="city"
+              {...register(`Address.city`, { required: true })}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="postCode">Post Code</Form.Label>
+            <Form.Control
+              id="postCode"
+              {...register(`Address.postCode`, { required: true })}
+            />
+          </Form.Group>
+
           <h2>Business</h2>
           <Form.Group>
-            <Form.Label>Business</Form.Label>
+            <Form.Label htmlFor="business">Business</Form.Label>
             <Form.Control
+              id="business"
               as="select"
-              {...register('Business', { required: true })}
+              {...register(`Business`, { required: true })}
             >
               <option value="" hidden>
-                {' '}
-                -- select an option --{' '}
+                -- select an option --
               </option>
               <option value="BANKING">BANKING</option>
               <option value="INSURANCE">INSURANCE</option>
@@ -98,14 +109,14 @@ export default function ApplicantForm({ user, number }) {
             </Form.Control>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Employment</Form.Label>
+            <Form.Label htmlFor="employment">Employment</Form.Label>
             <Form.Control
+              id="employment"
               as="select"
-              {...register('Employment', { required: true })}
+              {...register(`Employment`, { required: true })}
             >
               <option value="" hidden>
-                {' '}
-                -- select an option --{' '}
+                -- select an option --
               </option>
               <option value="EMPLOYEE">EMPLOYEE</option>
               <option value="OFFICIAL">OFFICIAL</option>
@@ -118,14 +129,18 @@ export default function ApplicantForm({ user, number }) {
             </Form.Control>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Employer</Form.Label>
-            <Form.Control {...register('employer', { required: true })} />
+            <Form.Label htmlFor="employer">Employer</Form.Label>
+            <Form.Control
+              id="employer"
+              {...register(`employer`, { required: true })}
+            />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Employed Since</Form.Label>
+            <Form.Label htmlFor="employedSince">Employed Since</Form.Label>
             <Form.Control
+              id="employedSince"
               type="date"
-              {...register('employedSince', { required: true })}
+              {...register(`employedSince`, { required: true })}
             />
           </Form.Group>
 

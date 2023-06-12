@@ -36,8 +36,7 @@ function swalConfirm() {
   });
 }
 async function postForm(data) {
-  fetch(`${process.env.REACT_APP_API_URL}/applications`, {
-    // const response = await fetch(`https://ghrl62f7e8.execute-api.eu-west-1.amazonaws.com/applications`, {
+  await fetch(`${process.env.REACT_APP_API_URL}/applications`, {
     method: 'POST',
     mode: 'no-cors', // no-cors, *cors, same-origin
     body: JSON.stringify(data),
@@ -57,18 +56,15 @@ export default function ApplicationForm() {
     Financing: {},
     HouseHold: {},
   };
-  const submit = () => {
+  const submit = async () => {
     if (
-      isEmpty(
-        data.FirstApplicant ||
-          data.SecondApplicant ||
-          data.Financing ||
-          data.HouseHold,
-      )
+      isEmpty(data.FirstApplicant) ||
+      isEmpty(data.Financing) ||
+      isEmpty(data.HouseHold)
     ) {
       swalError();
     } else {
-      postForm(data);
+      await postForm(data);
     }
   };
   return (

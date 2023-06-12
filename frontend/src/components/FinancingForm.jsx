@@ -28,57 +28,70 @@ export default function FinancingForm({ number, financing }) {
       <Accordion.Body>
         <Form onSubmit={handleSubmit(onSubmit)} name="Financing">
           <Form.Group>
-            <Form.Label>Financing Needs</Form.Label>
+            <Form.Label htmlFor="financingNeeds">Financing Needs</Form.Label>
             <Form.Control
               type="number"
+              id="financingNeeds"
               {...register('financingNeeds', { required: true })}
             />
           </Form.Group>
           <h2>Own Resources</h2>
           <Form.Group>
-            <Form.Label>Liquid Assets</Form.Label>
+            <Form.Label htmlFor="liquidAssets">Liquid Assets</Form.Label>
             <Form.Control
               type="number"
+              id="liquidAssets"
               {...register('OwnResources.liquidAssets', { required: true })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Balance from Building Society</Form.Label>
+            <Form.Label htmlFor="balanceFromBuildingSociety">
+              Balance from Building Society
+            </Form.Label>
             <Form.Control
               type="number"
+              id="balanceFromBuildingSociety"
               {...register('OwnResources.balanceFromBuildingSociety', {
                 required: true,
               })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Own Manpower</Form.Label>
+            <Form.Label htmlFor="ownManpower">Own Manpower</Form.Label>
             <Form.Control
               type="number"
+              id="ownManpower"
               {...register('OwnResources.ownManpower', { required: true })}
             />
           </Form.Group>
           <h2>Purchase Costs</h2>
           <Form.Group>
-            <Form.Label>Price of Land</Form.Label>
+            <Form.Label htmlFor="priceOfLand">Price of Land</Form.Label>
             <Form.Control
               type="number"
+              id="priceOfLand"
               {...register('PurchaseCosts.priceOfLand', { required: true })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Reconstruction Costs</Form.Label>
+            <Form.Label htmlFor="reconstructionCosts">
+              Reconstruction Costs
+            </Form.Label>
             <Form.Control
               type="number"
+              id="reconstructionCosts"
               {...register('PurchaseCosts.reconstructionCosts', {
                 required: true,
               })}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Additional Purchase Charges</Form.Label>
+            <Form.Label htmlFor="additionalPurchaseCharges">
+              Additional Purchase Charges
+            </Form.Label>
             <Form.Control
               type="number"
+              id="additionalPurchaseCharges"
               {...register('PurchaseCosts.additionalPurchaseCharges', {
                 required: true,
               })}
