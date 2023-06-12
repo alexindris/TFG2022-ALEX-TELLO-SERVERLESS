@@ -23,6 +23,20 @@ pipeline {
         )
       }
     }
+
+    stage('Test') {
+      steps {
+        parallel(
+          'Test Frontend': {
+            sh 'npm run test:cov -w frontend'
+          },
+          // 'Test Backend': { // TODO: Implement backend tests
+          //   sh 'npm run test -w backend'
+          // }
+        )
+      }
+    }
+
     stage('Build') {
       steps {
         sh 'npm run build'
