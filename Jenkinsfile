@@ -49,7 +49,9 @@ pipeline {
 
     stage('Static Code Analysis') {
       steps {
-        withSonarQubeEnv 'SonarQubeScanner'
+        withSonarQubeEnv ('SonarQubeScanner') {
+           sh "${scannerHome}/bin/sonar-scanner"
+        }
       }
     }
 
