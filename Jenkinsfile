@@ -4,6 +4,7 @@ pipeline {
       image 'node:lts-alpine'
       args '-p 3000:3000'
     }
+
   }
   stages {
     stage('Preparation') {
@@ -11,29 +12,32 @@ pipeline {
         sh 'npm install'
       }
     }
+
     stage('Lint') {
-      steps {
-        parallel(
-          'Lint Frontend': {
+      parallel {
+        stage('Lint Frontend') {
+          steps {
             sh 'npm run lint -w frontend'
-          },
-          'Lint Backend': {
+          }
+        }
+
+        stage('Lint Backend') {
+          steps {
             sh 'npm run lint -w backend'
           }
-        )
+        }
+
       }
     }
 
     stage('Test') {
-      steps {
-        parallel(
-          'Test Frontend': {
+      parallel {
+        stage('Test Frontend') {
+          steps {
             sh 'npm run test:cov -w frontend'
-          },
-          // 'Test Backend': { // TODO: Implement backend tests
-          //   sh 'npm run test -w backend'
-          // }
-        )
+          }
+        }
+
       }
     }
 
@@ -42,5 +46,12 @@ pipeline {
         sh 'npm run build'
       }
     }
+
+    stage('Static Code Analysis') {
+      steps {
+        withSonarQubeEnv 'SonarQubeScanner'
+      }
+    }
+
   }
 }
