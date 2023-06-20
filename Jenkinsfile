@@ -47,10 +47,15 @@ pipeline {
     //   }
     // }
 
+
+
     stage('Static Code Analysis') {
       steps {
+        sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472.zip'
+        sh 'unzip sonar-scanner-cli-4.6.2.2472.zip'
+        sh 'mv sonar-scanner-4.6.2.2472 /opt/sonar-scanner'
         withSonarQubeEnv ('SonarQubeScanner') {
-            sh "${scannerHome}/bin/sonar-scanner"
+            sh "/opt/sonar-scanner/bin/sonar-scanner"
 
         }
       }
