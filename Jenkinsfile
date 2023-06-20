@@ -49,7 +49,7 @@ pipeline {
 
     stage('Static Code Analysis') {
       steps {
-        withSonarQubeEnv ('SonarQubeScanner') {
+        withSonarQubeEnv ('SonarQubeScanner', envOnly: true) {
             println "SONAR_CONFIG_NAME: ${env.SONAR_CONFIG_NAME}"
             println "SONAR_HOST_URL: ${env.SONAR_HOST_URL}"
             println "SONAR_AUTH_TOKEN: ${env.SONAR_AUTH_TOKEN}"
