@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'timbru31/java-node:alpine-jre-hydrogen'
-      args '-p 3000:3000 --net=tfm-network'
+      args '-p 3000:3000 --net=tfm_tfm-network'
     }
 
   }
