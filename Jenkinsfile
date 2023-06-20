@@ -50,7 +50,13 @@ pipeline {
     stage('Static Code Analysis') {
       steps {
         withSonarQubeEnv ('SonarQubeScanner') {
-           sh "${SCANNER_HOME**}/bin/sonar-scanner"
+            println "SONAR_CONFIG_NAME: ${env.SONAR_CONFIG_NAME}"
+            println "SONAR_HOST_URL: ${env.SONAR_HOST_URL}"
+            println "SONAR_AUTH_TOKEN: ${env.SONAR_AUTH_TOKEN}"
+            println "SONAR_PROJECT_KEY: ${env.SONAR_PROJECT_KEY}"
+            println "SONAR_PROJECT_NAME: ${env.SONAR_PROJECT_NAME}"
+            sh "${scannerHome}/bin/sonar-scanner"
+
         }
       }
     }
