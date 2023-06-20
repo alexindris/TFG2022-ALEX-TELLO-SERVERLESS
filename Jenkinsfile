@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'timbru31/java-node:17-jre-18'
+      image 'timbru31/java-node:alpine-jre-hydrogen'
       args '-p 3000:3000'
     }
 
@@ -51,7 +51,6 @@ pipeline {
 
     stage('Static Code Analysis') {
       steps {
-        sh 'apk add --no-cache unzip' // Install 'unzip' package in the Docker image
         sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472.zip'
         sh 'unzip sonar-scanner-cli-4.6.2.2472.zip'
         sh 'mv sonar-scanner-4.6.2.2472 /opt/sonar-scanner'
