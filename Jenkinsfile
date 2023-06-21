@@ -10,9 +10,9 @@ pipeline {
     stage('Dependency Check') {
       steps {
           script {
-            def statusCode = sh "npm audit --json > audit_output.json", returnStatus:true
+            def statusCode = sh "npm audit", returnStatus:true
             if (statusCode != 0) {
-              error "Pipeline aborted due vulnerabilities found"
+              error "Pipeline aborted due vulnerabilities found please check npm audit report"
             }
         }
       }
@@ -85,11 +85,5 @@ pipeline {
       }
     }
 
-  }
-  post {
-    failure {
-              archiveArtifacts artifacts: 'audit_output.json', fingerprint: true
-
-    }
   }
 }
