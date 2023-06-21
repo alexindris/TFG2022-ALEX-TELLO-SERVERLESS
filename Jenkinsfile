@@ -8,15 +8,16 @@ pipeline {
   }
   stages {
     stage('Dependency Check') {
-      steps {
-          script {
-            def statusCode = sh "npm audit", returnStatus:true
-            if (statusCode != 0) {
-              error "Pipeline aborted due vulnerabilities found please check npm audit report"
-            }
-        }
+  steps {
+    script {
+      def statusCode = sh(returnStatus: true, script: 'npm audit')
+      if (statusCode != 0) {
+        error "Pipeline aborted due to vulnerabilities found. Please check the npm audit report."
       }
     }
+  }
+}
+
 
     stage('Preparation') {
       steps {
