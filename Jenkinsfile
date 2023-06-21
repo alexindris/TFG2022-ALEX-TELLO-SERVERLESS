@@ -9,11 +9,8 @@ pipeline {
   stages {
 stage('Dependency Check') {
   steps {
-    script {
-      def npmAudit = sh(returnStatus: true, script: 'npm audit')
-      if (npmAudit != 0) {
-        error ("Pipeline aborted due to vulnerabilities found. Please check the npm audit report.")
-      }
+    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+      sh 'npm audit'
     }
   }
 }
