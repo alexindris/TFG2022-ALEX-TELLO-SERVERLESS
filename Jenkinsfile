@@ -15,7 +15,6 @@ pipeline {
               error "Pipeline aborted due vulnerabilities found"
             }
         }
-        archiveArtifacts artifacts: 'audit_output.json', fingerprint: true
       }
     }
 
@@ -86,5 +85,11 @@ pipeline {
       }
     }
 
+  }
+  post {
+    failure {
+              archiveArtifacts artifacts: 'audit_output.json', fingerprint: true
+
+    }
   }
 }
