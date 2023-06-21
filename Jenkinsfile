@@ -12,7 +12,7 @@ stage('Dependency Check') {
     script {
       def npmAudit = sh(returnStatus: true, script: 'npm audit')
       if (npmAudit != 0) {
-        error "Pipeline aborted due to vulnerabilities found. Please check the npm audit report."
+        error ("Pipeline aborted due to vulnerabilities found. Please check the npm audit report.")
       }
     }
   }
