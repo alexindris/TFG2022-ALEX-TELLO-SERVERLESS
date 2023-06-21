@@ -10,7 +10,7 @@ pipeline {
     stage('Dependency Check') {
       steps {
           script {
-            def statusCode = sh "npm audit > audit_output.json", returnStatus:true
+            def statusCode = sh "npm audit --json > audit_output.json", returnStatus:true
             if (statusCode != 0) {
               error "Pipeline aborted due vulnerabilities found"
             }
