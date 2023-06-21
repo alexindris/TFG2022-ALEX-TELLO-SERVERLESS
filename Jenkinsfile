@@ -76,8 +76,7 @@ pipeline {
 
     stage('Dependency Check') {
       steps {
-        sh 'npm audit --json > audit.json'
-        archiveArtifacts 'audit.json'
+        sh 'npm audit'
       }
     }
 
