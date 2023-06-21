@@ -6,6 +6,17 @@ pipeline {
     }
 
   }
+  
+  stage('Dependency Check') {
+    steps {
+      def statusCode = sh "npm audit", returnStatus:true
+      if (statusCode != 0) {
+        error "Pipeline aborted due vulnerabilities found"
+      }
+    }
+  }
+
+
   stages {
     stage('Preparation') {
       steps {
@@ -71,12 +82,6 @@ pipeline {
 
         }
 
-      }
-    }
-
-    stage('Dependency Check') {
-      steps {
-        sh 'npm audit --audit-level=moderate'
       }
     }
 
