@@ -93,8 +93,8 @@ pipeline {
           sh 'unzip awscliv2.zip'
           sh './aws/install'
           // Configure the aws cli
-          sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
-          sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+          sh '/usr/local/bin/aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+          sh '/usr/local/bin/aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
           sh  'npm run deploy'
         }
       }
