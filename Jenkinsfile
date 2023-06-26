@@ -7,7 +7,6 @@ pipeline {
 
   }
   stages {
-
     stage('Preparation') {
       steps {
         sh 'npm install'
@@ -74,6 +73,7 @@ pipeline {
 
       }
     }
+
     stage('Dependency Check') {
       steps {
         sh 'npm audit'
@@ -82,21 +82,24 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        withCredentials(
-          [
-            string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-            string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
-          ]
-        ){
-          // Install the aws cli
-          sh 'apk add --no-cache aws-cli'
-          // Configure the aws cli
-          sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
-          sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
-          sh  'npm run deploy -- --stage dev' //this could be a random string to avoid conflicts
+        withCredentials(bindings: [
+                      string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+                      string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
+                    ]) {
+            sh 'apk add --no-cache aws-cli'
+            sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+            sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+            sh 'npm run deploy -- --stage dev'
+          }
+
         }
       }
-    }     
 
+      stage('Dynamic Code Analysis') {
+        steps {
+          build(job: 'OWASP_Zap', wait: true, propagate: true)
+        }
+      }
+
+    }
   }
-}
