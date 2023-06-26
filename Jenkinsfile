@@ -7,15 +7,6 @@ pipeline {
 
   }
   stages {
-stage('Dependency Check') {
-  steps {
-    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-      sh 'npm audit'
-    }
-  }
-}
-
-
 
     stage('Preparation') {
       steps {
@@ -83,12 +74,11 @@ stage('Dependency Check') {
 
       }
     }
-
-  }
-    post {
-    failure {
-              archiveArtifacts artifacts: 'audit_output.json', fingerprint: true
-
+    stage('Dependency Check') {
+      steps {
+        sh 'npm audit'
+      }
     }
+
   }
 }
