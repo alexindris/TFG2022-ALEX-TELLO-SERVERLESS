@@ -80,5 +80,23 @@ pipeline {
       }
     }
 
+    stage('Deploy') {
+      withCredentials(
+        [
+          string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+          string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
+        ]
+      ){
+        // Install the aws cli
+        sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
+        sh 'unzip awscliv2.zip'
+        sh './aws/install'
+        // Configure the aws cli
+        sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+        sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+        sh  'npm run deploy'
+      }
+    }     
+
   }
 }
