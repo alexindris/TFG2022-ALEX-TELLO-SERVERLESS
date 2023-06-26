@@ -89,12 +89,10 @@ pipeline {
           ]
         ){
           // Install the aws cli
-          sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
-          sh 'unzip awscliv2.zip'
-          sh './aws/install'
+          sh 'apk add --no-cache aws-cli'
           // Configure the aws cli
-          sh '/usr/local/bin/aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
-          sh '/usr/local/bin/aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+          sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+          sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
           sh  'npm run deploy'
         }
       }
