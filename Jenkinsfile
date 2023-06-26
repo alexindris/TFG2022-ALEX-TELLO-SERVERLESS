@@ -97,7 +97,12 @@ pipeline {
 
       stage('Dynamic Code Analysis') {
         steps {
-          build(job: 'OWASP_Zap', wait: true, propagate: true)
+          build(job: 'OWASP_Zap',
+          parameters: [
+            string(name: 'TARGET', value: 'https://d3o0y7iy8c1ubi.cloudfront.net'),
+            string(name: 'SCAN_TYPE', value: 'FULL')
+          ]
+          , wait: true, propagate: true)
         }
       }
 
