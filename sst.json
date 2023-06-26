@@ -1,5 +1,0 @@
-{
-  "name": "big-pug-bank",
-  "region": "eu-west-3",
-  "main": "stacks/index.ts"
-}

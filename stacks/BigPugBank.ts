@@ -1,16 +1,11 @@
-import {
-  Api,
-  Queue,
-  ReactStaticSite,
-  StackContext,
-} from "@serverless-stack/resources";
+import { Api, Queue, StackContext, StaticSite } from "sst/constructs";
 
 export function BigPugBank({ stack }: StackContext) {
   // Create ResultQueue
   const resultQueue = new Queue(stack, "resultQueue", {
     consumer: {
       function: {
-        handler: "workers/resultWorker.save",
+        handler: "backend/workers/resultWorker.save",
         timeout: 10,
         environment: {
           DATABASE_URL: process.env.DATABASE_URL ?? "default_uri",
@@ -24,7 +19,7 @@ export function BigPugBank({ stack }: StackContext) {
   const scoringQueue = new Queue(stack, "scoringQueue", {
     consumer: {
       function: {
-        handler: "workers/scoringWorker.score",
+        handler: "backend/workers/scoringWorker.score",
         timeout: 10,
         environment: {
           RESULT_QUEUE_NAME: resultQueue.queueName,
@@ -46,16 +41,16 @@ export function BigPugBank({ stack }: StackContext) {
       },
     },
     routes: {
-      "GET /applications": "./api/applications.getAll",
-      "POST /applications": "./api/applications.create",
-      "GET /application/{id}": "./api/applications.getOne",
+      "GET /applications": "backend/api/applications.getAll",
+      "POST /applications": "backend/api/applications.create",
+      "GET /application/{id}": "backend/api/applications.getOne",
     },
   });
 
   api.attachPermissions([scoringQueue]);
 
   // Deploy our React app
-  const site = new ReactStaticSite(stack, "ReactSite", {
+  const site = new StaticSite(stack, "ReactSite", {
     path: "frontend",
     environment: {
       REACT_APP_API_URL: api.url,
