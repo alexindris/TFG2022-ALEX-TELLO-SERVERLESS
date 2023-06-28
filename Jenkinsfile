@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'timbru31/java-node:alpine-jre-hydrogen'
-      args '-p 3000:3000 --net=tfm_tfm-network'
+      args '--net=tfm_tfm-network'
     }
 
   }
@@ -98,12 +98,13 @@ pipeline {
 
       stage('Dynamic Code Analysis') {
         steps {
-          build(job: 'OWASP_Zap',
-          parameters: [
-            string(name: 'TARGET', value: 'https://petam.io'), // This url should be dynamic and not hardcoded for multiple environments
-            string(name: 'SCAN_TYPE', value: 'FULL')
-          ]
-          , wait: true, propagate: true)
+          // build(job: 'OWASP_Zap',
+          // parameters: [
+          //   string(name: 'TARGET', value: 'https://petam.io'), // This url should be dynamic and not hardcoded for multiple environments
+          //   string(name: 'SCAN_TYPE', value: 'Full')
+          // ]
+          // , wait: true, propagate: true)
+          sh 'ls -la'
         }
       }
 
