@@ -101,7 +101,7 @@ pipeline {
           build(job: 'OWASP_Zap',
           parameters: [
             string(name: 'TARGET', value: 'https://petam.io'), // This url should be dynamic and not hardcoded for multiple environments
-            string(name: 'SCAN_TYPE', value: 'FULL')
+            string(name: 'SCAN_TYPE', value: 'Full')
           ]
           , wait: true, propagate: true)
         }
