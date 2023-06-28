@@ -82,24 +82,25 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        withCredentials(bindings: [
-                      string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-                      string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
-                    ]) {
-            sh 'apk add --no-cache aws-cli'
-            sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
-            sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
-            sh 'npm run deploy -- --stage dev'
-          }
+        sh 'ls -la'
+        // withCredentials(bindings: [
+        //               string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+        //               string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
+        //             ]) {
+        //     sh 'apk add --no-cache aws-cli'
+        //     sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+        //     sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+        //     sh 'npm run deploy -- --stage dev'
+        //   }
 
-        }
+        // }
       }
 
       stage('Dynamic Code Analysis') {
         steps {
           build(job: 'OWASP_Zap',
           parameters: [
-            string(name: 'TARGET', value: 'https://d3o0y7iy8c1ubi.cloudfront.net'),
+            string(name: 'TARGET', value: 'https://petam.io'), // This url should be dynamic and not hardcoded for multiple environments
             string(name: 'SCAN_TYPE', value: 'FULL')
           ]
           , wait: true, propagate: true)
