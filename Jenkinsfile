@@ -76,35 +76,35 @@ pipeline {
 
     stage('Dependency Check') {
       steps {
-        sh 'npm audit'
+        script { 
+          npm audit
+          exit $?
+        }
       }
     }
-
     stage('Deploy') {
       steps {
-        sh 'ls -la'
-        // withCredentials(bindings: [
-        //               string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-        //               string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
-        //             ]) {
-        //     sh 'apk add --no-cache aws-cli'
-        //     sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
-        //     sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
-        //     sh 'npm run deploy -- --stage dev'
-        //   }
+        withCredentials(bindings: [
+                      string(credentialsId:'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+                      string(credentialsId:'AWS_SECRET_ACCESS_KEY',variable:'AWS_SECRET_ACCESS_KEY')
+                    ]) {
+            sh 'apk add --no-cache aws-cli'
+            sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+            sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+            sh 'npm run deploy -- --stage dev'
+          }
 
          }
       }
 
       stage('Dynamic Code Analysis') {
         steps {
-          // build(job: 'OWASP_Zap',
-          // parameters: [
-          //   string(name: 'TARGET', value: 'https://petam.io'), // This url should be dynamic and not hardcoded for multiple environments
-          //   string(name: 'SCAN_TYPE', value: 'Full')
-          // ]
-          // , wait: true, propagate: true)
-          sh 'ls -la'
+          build(job: 'OWASP_Zap',
+          parameters: [
+            string(name: 'TARGET', value: 'https://petam.io'), // This url should be dynamic and not hardcoded for multiple environments
+            string(name: 'SCAN_TYPE', value: 'Full')
+          ]
+          , wait: true, propagate: true)
         }
       }
 
