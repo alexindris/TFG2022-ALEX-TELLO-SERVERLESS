@@ -76,8 +76,12 @@ pipeline {
 
     stage('Dependency Check') {
       steps {
-         sh ' npm audit'
-         sh ' exit $? '
+         sh '''
+              npm audit
+              if [ $? -ne 0 ]; then
+                exit 1
+              fi
+            '''
       }
     }
     stage('Deploy') {
