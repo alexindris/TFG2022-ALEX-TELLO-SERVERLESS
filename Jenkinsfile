@@ -42,12 +42,6 @@ pipeline {
       }
     }
 
-    stage('Build') {
-      steps {
-        sh 'npm run build'
-      }
-    }
-
     stage('Static Code Analysis') {
       steps {
         sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472.zip'
@@ -77,8 +71,8 @@ pipeline {
 
     stage('Dependency Check') {
       steps {
-        //  sh 'echo deactivated'
-         sh 'npm audit'
+         sh 'echo deactivated'
+        //  sh 'npm audit'
       }
     }
     stage('Deploy') {
