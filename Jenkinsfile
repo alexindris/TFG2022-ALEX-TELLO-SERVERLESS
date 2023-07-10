@@ -77,8 +77,8 @@ pipeline {
 
     stage('Dependency Check') {
       steps {
-         sh 'echo deactivated'
-        //  sh 'npm audit'
+        //  sh 'echo deactivated'
+         sh 'npm audit'
       }
     }
     stage('Deploy') {
@@ -100,7 +100,7 @@ pipeline {
         steps {
           build(job: 'OWASP_Zap',
           parameters: [
-            string(name: 'TARGET', value: 'https://d2ney4piiot3h4.cloudfront.net'), // This url should be dynamic and not hardcoded for multiple environments
+            string(name: 'TARGET', value: 'https://dlpmgfqosumaj.cloudfront.net'), // This url should be dynamic and not hardcoded for multiple environments
             string(name: 'SCAN_TYPE', value: 'Baseline')
           ]
           , wait: true, propagate: true)
